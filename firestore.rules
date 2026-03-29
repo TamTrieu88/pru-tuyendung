@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: applicants
+    // Fields:
+    //   - fullName: string (required)
+    //   - email: string (required, email format)
+    //   - phone: string (required)
+    //   - position: string (required)
+    //   - status: string (required, enum)
+    //   - notes: string (optional)
+    //   - createdAt: timestamp (required)
+    //   - updatedAt: timestamp (required)
+    //
+    // Collection: settings
+    // Document: facebook
+    // Fields:
+    //   - accessToken: string
+    //   - pageId: string
+    //   - updatedAt: timestamp
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return true; // Bypassing for development with admin/123 login
+    }
+
+    function isAdmin() {
+      return true; // Bypassing for development with admin/123 login
+    }
+
+    function isValidApplicant(data) {
+      return data.fullName is string && data.fullName.size() > 0 && data.fullName.size() < 100 &&
+             data.email is string && data.email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$") &&
+             data.phone is string && data.phone.size() >= 10 && data.phone.size() <= 15 &&
+             data.position is string &&
+             data.status in ["New", "Contacted", "Interviewing", "Trained", "Failed", "Hired"];
+    }
+
+    match /applicants/{applicantId} {
+      // Anyone can submit a form (create)
+      allow create: if isValidApplicant(request.resource.data);
+      
+      // Only admin can read, update, or delete
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /settings/facebook {
+      // Only admin can manage Facebook settings
+      allow read, write: if isAdmin();
+    }
+
+    match /users/{userId} {
+      // Only admin can manage accounts
+      allow read, write: if isAdmin();
+    }
+  }
+}

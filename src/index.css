@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-red-500: #F32735;
+  --color-red-600: #ED1B2E; /* Brand Primary */
+  --color-red-700: #B71222;
+  --color-blue-900: #1B365D; /* Brand Secondary / Trust */
+  
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap');
+  
+  body {
+    @apply font-sans bg-slate-50 text-slate-800 antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+/* ============================================================
+   NexSaS Design System – Animation & Effect Utilities
+   ============================================================ */
+
+@layer utilities {
+  /* Glassmorphism panel */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  /* Gradient text (brand) */
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #ED1B2E 0%, #ff6b6b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Soft glow on cards */
+  .glow-red {
+    box-shadow: 0 0 40px -10px rgba(237, 27, 46, 0.25);
+  }
+  .glow-blue {
+    box-shadow: 0 0 40px -10px rgba(27, 54, 93, 0.2);
+  }
+}
+
+/* ===  KEYFRAME ANIMATIONS  === */
+
+/* Gentle floating for hero decorations */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-14px) rotate(2deg); }
+}
+@keyframes float-y-reverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(14px) rotate(-2deg); }
+}
+@keyframes float-x {
+  0%, 100% { transform: translateX(0px); }
+  50%       { transform: translateX(-10px); }
+}
+
+/* Rotating glow blob */
+@keyframes blob-move {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(20px, -15px) scale(1.05); }
+  66%       { transform: translate(-15px, 10px) scale(0.95); }
+}
+
+/* Infinite left-scroll for marquee */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-float-y         { animation: float-y 4s ease-in-out infinite; }
+.animate-float-y-reverse  { animation: float-y-reverse 5s ease-in-out infinite; }
+.animate-float-x         { animation: float-x 6s ease-in-out infinite; }
+.animate-blob            { animation: blob-move 8s ease-in-out infinite; }
+.animate-marquee-left    { animation: marquee-left 22s linear infinite; }

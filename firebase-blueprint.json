@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Applicant": {
+      "title": "Applicant",
+      "description": "A person applying for a position at Prudential",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "position": { "type": "string" },
+        "experience": { "type": "string" },
+        "status": { 
+          "type": "string", 
+          "enum": ["New", "Contacted", "Interviewing", "Trained", "Failed", "Hired"] 
+        },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fullName", "email", "phone", "position", "status"]
+    },
+    "FacebookSettings": {
+      "title": "Facebook Settings",
+      "description": "Configuration for Facebook Graph API",
+      "type": "object",
+      "properties": {
+        "accessToken": { "type": "string" },
+        "pageId": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Account": {
+      "title": "Account",
+      "description": "User account for the portal",
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["username", "password", "role"]
+    }
+  },
+  "firestore": {
+    "applicants": {
+      "schema": "Applicant",
+      "description": "Collection of job applicants"
+    },
+    "settings/facebook": {
+      "schema": "FacebookSettings",
+      "description": "Facebook API configuration"
+    },
+    "users": {
+      "schema": "Account",
+      "description": "User accounts for the portal"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Prudential Recruitment Portal",
+  "description": "A recruitment management system for Prudential with Facebook Graph API integration and applicant tracking.",
+  "requestFramePermissions": []
+}
